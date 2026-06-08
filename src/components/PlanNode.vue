@@ -2,6 +2,7 @@
 import { inject, nextTick, onMounted, provide, reactive, ref, watch } from "vue"
 import PlanNodeDetail from "@/components/PlanNodeDetail.vue"
 import NodeBadges from "@/components/NodeBadges.vue"
+import DisabledBadge from "@/components/DisabledBadge.vue"
 import type { IPlan, Node, ViewOptions } from "@/interfaces"
 import {
   HighlightedNodeIdKey,
@@ -143,9 +144,8 @@ function centerCte() {
           <header class="mb-0 d-flex justify-content-between">
             <h4
               class="overflow-hidden rounded text-start py-0 px-1 node-detail-toggle"
-              @click.prevent.stop="showDetails = !showDetails"
             >
-              <span class="text-body-tertiary">
+              <span class="text-body-tertiary" @click.prevent.stop="showDetails = !showDetails">
                 <FontAwesomeIcon
                   fixed-width
                   :icon="faChevronUp"
@@ -158,6 +158,7 @@ function centerCte() {
                 ></FontAwesomeIcon>
               </span>
               {{ nodeName }}
+              <DisabledBadge :node="node" :settings="!!store.plan?.content.Settings"/>
             </h4>
             <div class="text-nowrap">
               <NodeBadges :node="node" />
